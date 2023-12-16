@@ -1,16 +1,14 @@
 # demo_detection_app
 
-A new Flutter project.
+A demo Object Detection Application for Grocery store Items.
+The app counts how many items of each class is available
 
-## Getting Started
+## Ai Model
 
-This project is a starting point for a Flutter application.
+The Ai model is a [YOLOV8n](https://docs.ultralytics.com/) pretrained model customised with our Dataset to recognize custom classes
 
-A few resources to get you started if this is your first Flutter project:
+## Dataset Used
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The Dataset that was used is an annotated subset of [Freiburg groceries](http://aisdatasets.informatik.uni-freiburg.de/freiburg_groceries_dataset/)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The annotated Subset can be found [here](https://app.roboflow.com/project/retail-objects-xb3fz/2)
