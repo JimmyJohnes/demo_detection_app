@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vision/flutter_vision.dart';
+import 'package:pytorch_lite/pytorch_lite.dart';
+import 'dart:io';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  FlutterVision vision = FlutterVision();
+	Widget i  = Image.asset("assets/labels/Milk-Carton-Packaging-Mockup.jpg");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,10 +41,16 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: null,
+      body: i,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-		await vision.loadYoloModel(modelPath: "assets/model/best(1).pt", modelVersion: "yolov8", labels: "assets/labels/labels.txt");
+	  ModelObjectDetection model = await PytorchLite.loadObjectDetectionModel(
+		"assets/model/yolov8n.torchscript",
+		80,640,640,
+	  );
+	  List<ResultObjectDetection> objDetect = await model.getImagePrediction(await File("assets/labels/Milk-Carton-Packaging-Mockup.jpg").readAsBytes(),
+		minimumScore: 0.1);
+		i = model.renderBoxesOnImage(File("assets/labels/Milk-Carton-Packaging-Mockup.jpg"), objDetect);
 	},
         tooltip: 'Open Camera',
         child: const Icon(Icons.camera),
