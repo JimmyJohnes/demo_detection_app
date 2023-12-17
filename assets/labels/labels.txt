@@ -1,0 +1,10 @@
+Beans
+Cake
+Flour
+Jam
+Milk
+Rice
+Soda
+Spices
+Sugar
+Water
