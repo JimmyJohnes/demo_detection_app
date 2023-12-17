@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pytorch_lite/pytorch_lite.dart';
+import 'package:image_picker_android/image_picker_android.dart';
 import 'dart:io';
 
 void main() {
@@ -34,6 +36,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 	Widget i  = Image.asset("assets/labels/Milk-Carton-Packaging-Mockup.jpg");
+	Image dk = Image.asset("assets/labels/Milk-Carton-Packaging-Mockup.jpg");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,16 +44,35 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: i,
+      body: Container(
+      width: 250,
+      height: 250,
+        child: Stack(
+		children: [
+			i
+		],
+	),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
 	  ModelObjectDetection model = await PytorchLite.loadObjectDetectionModel(
-		"assets/model/yolov8n.torchscript",
-		80,640,640,
-	  );
-	  List<ResultObjectDetection> objDetect = await model.getImagePrediction(await File("assets/labels/Milk-Carton-Packaging-Mockup.jpg").readAsBytes(),
-		minimumScore: 0.1);
-		i = model.renderBoxesOnImage(File("assets/labels/Milk-Carton-Packaging-Mockup.jpg"), objDetect);
+		"assets/model/best(1).torchscript",
+		10, 640, 640,
+		objectDetectionModelType: ObjectDetectionModelType.yolov8,
+		labelPath: "assets/labels/labels.txt"
+		);
+		PickedFile? imageFile = await ImagePickerAndroid().pickImage(source: ImageSource.gallery);
+	 var img = await File(imageFile!.path).readAsBytes();
+	 List<ResultObjectDetection> objDetect = await model.getImagePrediction(img,minimumScore: 0.1,iOUThreshold: 0.3);
+	 print("=======================\n");
+	 for (var i in objDetect){
+	 	print(i.className);
+	 }
+	 File foo = File(imageFile.path);
+	 i = model.renderBoxesOnImage(foo, objDetect);
+	 dk = Image.file(foo);
+		setState(() {
+				});
 	},
         tooltip: 'Open Camera',
         child: const Icon(Icons.camera),
