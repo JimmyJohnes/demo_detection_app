@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CountObjects extends StatefulWidget {
-  const CountObjects({super.key,required this.objNames});
+  const CountObjects({super.key,this.objNames = const ["Foo", "Bar","Baz","Foo"]});
   final List<String?> objNames;
 
   @override
@@ -31,23 +31,61 @@ class _CountObjectsState extends State<CountObjects> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 70, 0, 100),
-	shadowColor: Colors.grey,
-        title: const Center(child: Text("Demo Detection App", style: TextStyle(
-		color: Colors.white,
-		fontSize: 24.0,
-		fontWeight: FontWeight.bold,
-	),)),
-      ),
-    body: ListView.builder(itemBuilder: (_, index) {
-	  return Row(
-	  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-	  children: [
+    body: Column(
+      children: [
+        Expanded(
+          child: Stack(
+            children: [
+	    Container(
+		decoration: const BoxDecoration(
+			borderRadius:BorderRadius.vertical(bottom: Radius.circular(50)),
+			color: Colors.white
+		),
+		),
+	    Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+		decoration: const BoxDecoration(
+			borderRadius:BorderRadius.vertical(bottom: Radius.circular(50), top: Radius.circular(15)),
+			color: const Color.fromARGB(255, 70, 0, 125),
+		),
+                child: ListView.builder(itemBuilder: (_, index) {
+	  return Padding(
+	    padding: const EdgeInsets.all(16.0),
+	    child: Row(
+	    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+	    children: [
 		  Text("${frequencies.keys.elementAt(index)}", style: TextStyle(color: Colors.white,fontSize: 24.0),),
 		  Text("${frequencies[frequencies.keys.elementAt(index)]}", style: TextStyle(color: Colors.white, fontSize: 24.0),),
-	  ],);
+	    ],),
+	  );
 	},itemCount: frequencies.length,),
+              ),
+            ),
+	    ]
+          ),
+        ),
+	  Padding(
+	    padding: const EdgeInsets.all(16.0),
+	    child: Row(
+	      children: [
+	        Expanded(
+	          child: ElevatedButton(
+			style: const ButtonStyle(
+			      backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 155, 70, 185)),
+			      padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0)),
+			),
+	          onPressed: (){
+	          	Navigator.pop(context);
+	          },
+	          child: const Text("Back"),
+	          ),
+	        ),
+	      ],
+	    ),
+	  )
+      ],
+    ),
 	backgroundColor: const Color.fromARGB(255, 70, 0, 125),
     )   ;
 }

@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   pytorch_lite: ^4.2.4
   image_picker: ^1.0.5
+  camera: ^0.10.5+7
 
 dev_dependencies:
   flutter_test:
