@@ -3,7 +3,6 @@ import 'package:demo_detection_app/camera_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pytorch_lite/pytorch_lite.dart';
-import 'package:image_picker_android/image_picker_android.dart';
 import 'package:demo_detection_app/counted_objects.dart';
 import 'dart:io';
 import 'package:demo_detection_app/globals.dart';
@@ -112,14 +111,14 @@ class _MyHomePageState extends State<MyHomePage> {
 		  	    Icon(Icons.camera)
 		  	  ],
 		  	),
-		        ), // This trailing comma makes auto-formatting nicer for build methods.
+		        ),
 		        ElevatedButton(
 			style: const ButtonStyle(
 			      backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 70, 0, 125)),
 			      padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0)),
 			),
 		  	onPressed: () async {
-		  		PickedFile? pickedImage = await ImagePickerAndroid().pickImage(source: ImageSource.gallery);
+		  		XFile? pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
 				image  = Container(
 					decoration: const BoxDecoration(
 					      color: Color.fromARGB(100, 70, 0, 125),
